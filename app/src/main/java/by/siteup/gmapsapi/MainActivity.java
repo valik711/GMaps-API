@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
                 GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
                 GeocodingResult[] results = new GeocodingResult[0];
                 try {
+
                     results = GeocodingApi.geocode(context, String.valueOf(ed.getText() + " Минск")).language("ru").await();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
