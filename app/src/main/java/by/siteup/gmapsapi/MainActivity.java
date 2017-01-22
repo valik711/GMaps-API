@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         TextView myTextView = (TextView) findViewById(R.id.tv);
         myTextView.setText(results[0].formattedAddress);
 
