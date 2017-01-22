@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.maps.GeoApiContext;
@@ -20,17 +22,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
-        GeocodingResult[] results = new GeocodingResult[0];
-        try {
-            results = GeocodingApi.geocode(context,
-                    "главпочтамт минск").language("ru").await();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Button button= (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText ed = (EditText) findViewById(R.id.editText);
+                GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
+                GeocodingResult[] results = new GeocodingResult[0];
+                try {
+                    results = GeocodingApi.geocode(context, String.valueOf(ed.getText())).language("ru").await();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-        TextView myTextView = (TextView) findViewById(R.id.tv);
-        myTextView.setText(results[0].formattedAddress);
+                TextView myTextView = (TextView) findViewById(R.id.tv);
+                myTextView.setText(results[0].formattedAddress);
+            }
+        });
+
+
+
+
 
     }
 
