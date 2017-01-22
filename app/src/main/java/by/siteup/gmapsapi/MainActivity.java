@@ -13,15 +13,15 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //empty comment
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button button= (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
                 GeocodingResult[] results = new GeocodingResult[0];
                 try {
-                    results = GeocodingApi.geocode(context, String.valueOf(ed.getText())).language("ru").await();
+                    results = GeocodingApi.geocode(context, String.valueOf(ed.getText()+" Минск")).language("ru").await();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
