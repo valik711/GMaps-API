@@ -4,6 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +19,18 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
+        GeocodingResult[] results = new GeocodingResult[0];
+        try {
+            results = GeocodingApi.geocode(context,
+                    "главпочтамт минск").language("ru").await();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TextView myTextView = (TextView) findViewById(R.id.tv);
+        myTextView.setText(results[0].formattedAddress);
+
     }
 
     @Override
