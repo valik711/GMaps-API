@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         menuItems.add("Find Places");
         menuItems.add("Navigate");
-        menuItems.add("Get adress");
+        menuItems.add("Get address");
         menuItems.add("Settings");
         menuItems.add("About");
 
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         switch (position){
             case FIND_PLACES :  fragment = new FindPlaceFragment(); break;
             case NAVIGATE :  fragment = new NavigateFragment(); break;
+            default: fragment = new AboutFragment(); break;
         }
 
 
