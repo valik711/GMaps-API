@@ -1,10 +1,15 @@
 package by.siteup.gmapsapi;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -12,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,13 +35,12 @@ import com.google.maps.model.PlacesSearchResult;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    ArrayList<String> a = new ArrayList<>();
     ArrayList<String> menuItems = new ArrayList<>();
-    ArrayAdapter<String> ad;
+    private Fragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,60 +55,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
         mDrawerLayout.setOnTouchListener(this);
-
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, menuItems));
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menuItems));
 
 
-        final ListView places = (ListView)findViewById(R.id.listView);
-
-
-
-
-
-
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
-
-
-        final ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, a);
-        ad = arrayAdapter;
-
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
     }
 
-    @Override
-    public void onClick(View v) {
-
-
-        EditText ed = (EditText) findViewById(R.id.editText);
-        ListView places = (ListView) findViewById(R.id.listView);
-        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
-        PlacesSearchResponse results = new PlacesSearchResponse();
-
-        try {
-            results = PlacesApi.textSearchQuery(context, String.valueOf(ed.getText() + " Минск")).language("ru").await();
-            for(PlacesSearchResult r: results.results){
-                a.add(r.formattedAddress);
-            }
-
-
-            places.setAdapter(ad);
-            InputMethodManager inputManager = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
-
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
         }
 
     }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if(fragment != null) fragmentManager.beginTransaction()
+                .remove(fragment).commit();
+        switch (position){
+            case 0:  fragment = new FindPlaceFragment(); break;
+            default:  fragment = new NavigateFragment(); break;
+        }
+
+
+
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
