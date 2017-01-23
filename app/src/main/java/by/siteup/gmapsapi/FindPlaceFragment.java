@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.PlacesApi;
@@ -27,6 +29,7 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
     Button searchButton;
     EditText requestTextEdit;
     ListView placesListView;
+    TableLayout buttonsTable;
     ArrayAdapter<String> adapter;
     ArrayList<String> addresses = new ArrayList<>();
 
@@ -35,6 +38,7 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, addresses);
+
     }
 
     @Override
@@ -43,6 +47,7 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.find_places, container, false);
 
+        ArrayList<Button> buts = new ArrayList<>();
 
         if( isAdded()) {
             searchButton = (Button) rootView.findViewById(R.id.button);
