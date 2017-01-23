@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private ListView mDrawerList;
     ArrayList<String> menuItems = new ArrayList<>();
     private Fragment fragment = null;
+    private final int FIND_PLACES =0;
+    private final int NAVIGATE=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         setContentView(R.layout.activity_main);
 
         menuItems.add("Find Places");
-        menuItems.add("Build Route");
+        menuItems.add("Navigate");
         menuItems.add("Get adress");
         menuItems.add("Settings");
         menuItems.add("About");
@@ -80,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if(fragment != null) fragmentManager.beginTransaction()
                 .remove(fragment).commit();
         switch (position){
-            case 0:  fragment = new FindPlaceFragment(); break;
-            default:  fragment = new NavigateFragment(); break;
+            case FIND_PLACES :  fragment = new FindPlaceFragment(); break;
+            case NAVIGATE :  fragment = new NavigateFragment(); break;
         }
 
 
