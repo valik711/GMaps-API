@@ -2,21 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:layout_marginTop="20dp">
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/butTable"
-        android:layout_weight="0.93"></TableLayout>
+        android:layout_height="426dp"
+        android:id="@+id/butTable"></TableLayout>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Сейчас открыто"
         android:id="@+id/checkBox"
-        android:layout_weight="0.07"
+        android:layout_weight="0"
         android:layout_gravity="center_horizontal" />
 
     <Button
