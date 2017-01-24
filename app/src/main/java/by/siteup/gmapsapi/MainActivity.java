@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private ListView mDrawerList;
     ArrayList<String> menuItems = new ArrayList<>();
     private Fragment fragment = null;
-    private final int FIND_PLACES =0;
-    private final int NAVIGATE=1;
+    private final int FIND_PLACES = 0;
+    private final int NAVIGATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

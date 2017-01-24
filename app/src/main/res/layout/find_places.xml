@@ -4,40 +4,24 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="top" />
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/butTable"></TableLayout>
+        android:id="@+id/butTable"
+        android:layout_weight="0.93"></TableLayout>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Сейчас открыто"
         android:id="@+id/checkBox"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07" />
+        android:layout_weight="0.07"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="61dp"
         android:text="Найти"
-        android:id="@+id/button"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_marginTop="36dp"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentEnd="false" />
+        android:id="@+id/button" />
 </LinearLayout>

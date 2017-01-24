@@ -1,5 +1,6 @@
 package by.siteup.gmapsapi;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -33,6 +34,13 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
     ArrayAdapter<String> adapter;
     ArrayList<String> addresses = new ArrayList<>();
 
+    TableLayout.LayoutParams rowLp = new TableLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT);
+    TableRow.LayoutParams cellLp = new TableRow.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT);
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,24 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
         if( isAdded()) {
             searchButton = (Button) rootView.findViewById(R.id.button);
             searchButton.setOnClickListener(this);
+
+
+            buttonsTable = (TableLayout) rootView.findViewById(R.id.butTable);
+
+            for (int r = 0; r < 8; ++r)
+            {
+                TableRow row = new TableRow(getActivity());
+                for (int c = 0; c < 3; ++c)
+                {
+
+                    View v = inflater.inflate(R.layout.icon_button, null, false);
+                    row.addView(v, cellLp);
+                }
+                buttonsTable.addView(row, rowLp);
+            }
+
+
+
         }
         return rootView;
 
