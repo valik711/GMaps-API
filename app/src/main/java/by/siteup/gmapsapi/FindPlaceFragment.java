@@ -3,6 +3,7 @@ package by.siteup.gmapsapi;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.Layout;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.PlacesApi;
@@ -31,6 +33,8 @@ import com.google.maps.model.PlacesSearchResult;
 import java.util.ArrayList;
 
 /**
+ * This class represents a fragment used for finding places
+ *
  * Created by valik on 1/23/17.
  */
 public class FindPlaceFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
@@ -73,30 +77,30 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener,
             buttonsTable = (TableLayout) rootView.findViewById(R.id.butTable);
 
             ArrayList<Pair<Integer, String>> icons = new ArrayList<>();
-            icons.add(new Pair<Integer, String>(R.drawable.transport, "Автомойки"));
-            icons.add(new Pair<Integer, String>(R.drawable.animals,"Рыбалка"));
-            icons.add(new Pair<Integer, String>(R.drawable.animals1,"Ветеринар"));
-            icons.add(new Pair<Integer, String>(R.drawable.carmechanic,"Автосервис"));
-            icons.add(new Pair<Integer, String>(R.drawable.dumbbellfortraining, "Фитнесс"));
-            icons.add(new Pair<Integer, String>(R.drawable.frontalbussilhouette,"Транспорт"));
-            icons.add(new Pair<Integer, String>(R.drawable.game,"Досуг"));
-            icons.add(new Pair<Integer, String>(R.drawable.hairdresserscissorsandcomb,"Парикмахер"));
-            icons.add(new Pair<Integer, String>(R.drawable.hamburguerdrinkwithstraw,"Фастфуд"));
-            icons.add(new Pair<Integer, String>(R.drawable.letter,"Паркинг"));
-            icons.add(new Pair<Integer, String>(R.drawable.sleepingbedsilhouette,"Гостиница"));
-            icons.add(new Pair<Integer, String>(R.drawable.shopperwithbags,"Магазин"));
-            icons.add(new Pair<Integer, String>(R.drawable.subwaysign,"Метро"));
-            icons.add(new Pair<Integer, String>(R.drawable.swimmingman,"Бассейн"));
-            icons.add(new Pair<Integer, String>(R.drawable.swinggame,"Для детей"));
-            icons.add(new Pair<Integer, String>(R.drawable.teacherreading,"Библиотека"));
-            icons.add(new Pair<Integer, String>(R.drawable.tooth,"Стоматолог"));
-            icons.add(new Pair<Integer, String>(R.drawable.trainonrailroad,"Поезд"));
-            icons.add(new Pair<Integer, String>(R.drawable.trialhammer,"Суд"));
-            icons.add(new Pair<Integer, String>(R.drawable.tshirtsilhouette,"Одежда"));
-            icons.add(new Pair<Integer, String>(R.drawable.vehicle,"Авто"));
-            icons.add(new Pair<Integer, String>(R.drawable.frontalbussilhouette,"Еще"));
-            icons.add(new Pair<Integer, String>(R.drawable.transport,"и еще"));
-            icons.add(new Pair<Integer, String>(R.drawable.animals,"и еще..."));
+            icons.add(new Pair<>(R.drawable.transport, "Автомойки"));
+            icons.add(new Pair<>(R.drawable.animals,"Рыбалка"));
+            icons.add(new Pair<>(R.drawable.animals1,"Ветеринар"));
+            icons.add(new Pair<>(R.drawable.carmechanic,"Автосервис"));
+            icons.add(new Pair<>(R.drawable.dumbbellfortraining, "Фитнесс"));
+            icons.add(new Pair<>(R.drawable.frontalbussilhouette,"Транспорт"));
+            icons.add(new Pair<>(R.drawable.game,"Досуг"));
+            icons.add(new Pair<>(R.drawable.hairdresserscissorsandcomb,"Парикмахер"));
+            icons.add(new Pair<>(R.drawable.hamburguerdrinkwithstraw,"Фастфуд"));
+            icons.add(new Pair<>(R.drawable.letter,"Паркинг"));
+            icons.add(new Pair<>(R.drawable.sleepingbedsilhouette,"Гостиница"));
+            icons.add(new Pair<>(R.drawable.shopperwithbags,"Магазин"));
+            icons.add(new Pair<>(R.drawable.subwaysign,"Метро"));
+            icons.add(new Pair<>(R.drawable.swimmingman,"Бассейн"));
+            icons.add(new Pair<>(R.drawable.swinggame,"Для детей"));
+            icons.add(new Pair<>(R.drawable.teacherreading,"Библиотека"));
+            icons.add(new Pair<>(R.drawable.tooth,"Стоматолог"));
+            icons.add(new Pair<>(R.drawable.trainonrailroad,"Поезд"));
+            icons.add(new Pair<>(R.drawable.trialhammer,"Суд"));
+            icons.add(new Pair<>(R.drawable.tshirtsilhouette,"Одежда"));
+            icons.add(new Pair<>(R.drawable.vehicle,"Авто"));
+            icons.add(new Pair<>(R.drawable.frontalbussilhouette,"Еще"));
+            icons.add(new Pair<>(R.drawable.transport,"и еще"));
+            icons.add(new Pair<>(R.drawable.animals,"и еще..."));
 
             int n = 0;
             for (int r = 0; r < 6; ++r)
@@ -132,8 +136,11 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener,
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyA-SaUHNdfLPrNTvgIhijWV09OIXmthvI4");
         PlacesSearchResponse apiResponse = new PlacesSearchResponse();
 
+        SharedPreferences sPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         try {
-            apiResponse = PlacesApi.textSearchQuery(context, String.valueOf(requestTextEdit.getText() + " Минск")).language("ru").await();
+            String request = requestTextEdit.getText() + " ";
+            if(sPref.contains("city")) request += sPref.getString("city", "");
+            apiResponse = PlacesApi.textSearchQuery(context, String.valueOf(request)).language("ru").await();
             for(PlacesSearchResult r: apiResponse.results){
                 addresses.add(r.formattedAddress);
             }
