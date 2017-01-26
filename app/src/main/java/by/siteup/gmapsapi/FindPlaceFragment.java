@@ -160,7 +160,7 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        // executeble code onClick
+        // executeble code onClick on placeType item
         return false;
     }
 }
