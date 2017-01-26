@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private Fragment fragment = null;
     private final int FIND_PLACES = 0;
     private final int NAVIGATE = 1;
+    private final int SETTINGS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         switch (position){
             case FIND_PLACES :  fragment = new FindPlaceFragment(); break;
             case NAVIGATE :  fragment = new NavigateFragment(); break;
+            case SETTINGS :  fragment = new SettingsFragment(); break;
             default: fragment = new AboutFragment(); break;
         }
 
