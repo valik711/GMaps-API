@@ -6,9 +6,11 @@ import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 /**
  * Created by valik on 1/23/17.
  */
-public class FindPlaceFragment extends Fragment implements View.OnClickListener{
+public class FindPlaceFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
 
     Button searchButton;
     EditText requestTextEdit;
@@ -103,9 +105,11 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
                 row.setGravity(Gravity.CENTER);
                 for (int c = 0; c < 4; ++c)
                 {
+
                     View v = inflater.inflate(R.layout.icon_button, null, false);
                     ImageView placeIcon = (ImageView)v.findViewById(R.id.placeImage);
                     placeIcon.setImageResource(icons.get(n).first);
+                    placeIcon.setOnTouchListener(this);
                     TextView placeText = (TextView)v.findViewById(R.id.placeText);
                     placeText.setText(icons.get(n).second);
                     row.addView(v, cellLp);
@@ -145,6 +149,12 @@ public class FindPlaceFragment extends Fragment implements View.OnClickListener{
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        // executeble code onClick
+        return false;
     }
 }
 
