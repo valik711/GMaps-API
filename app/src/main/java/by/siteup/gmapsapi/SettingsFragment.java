@@ -1,24 +1,29 @@
 package by.siteup.gmapsapi;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
  * Created by valik on 1/26/17.
  */
-public class SettingsFragment extends Fragment{
+public class SettingsFragment extends Fragment implements View.OnClickListener{
 
     ArrayAdapter<String> ad;
     ArrayList<String> a = new ArrayList<>();
     Spinner city;
-
+    Button saveBtn;
+    TextView t;
 
 
     @Override
@@ -46,6 +51,18 @@ public class SettingsFragment extends Fragment{
 
         city = (Spinner) rootView.findViewById(R.id.spinner);
         city.setAdapter(ad);
+
+        SharedPreferences sPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+
+
+
+        ArrayAdapter adapter = (ArrayAdapter) city.getAdapter();
+        city.setSelection(adapter.getPosition(sPref.getString("city", "")));
+        saveBtn = (Button) rootView.findViewById(R.id.saveBtn);
+        t = (TextView) rootView.findViewById(R.id.textView2);
+        saveBtn.setOnClickListener(this);
+
         return rootView;
 
     }
@@ -56,6 +73,16 @@ public class SettingsFragment extends Fragment{
     }
 
 
+    @Override
+    public void onClick(View v) {
+        SharedPreferences sPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString("city", city.getSelectedItem().toString());
+        ed.commit();
 
+        t.setText(sPref.getString("city", ""));
+
+
+    }
 }
 
